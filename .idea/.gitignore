@@ -1,0 +1,5 @@
+# Default ignored files
+/workspace.xml
+data_preprocessing/output_data/*
+data_preprocessing/raw_data/*
+!.gitkeep
