@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../Button/index';
-import { card, imageContainer, wrapper, text, hr, button } from './index.module.css';
+import { imageContainer, wrapper, button } from './index.module.css';
 
 const GetStarted = () => {
     return (
@@ -16,16 +15,7 @@ const GetStarted = () => {
                         </p>
                         <div className={`${button}`}>
                             <Link color="white" to="/register">
-                                <Button
-                                    width="65%"
-                                    color="#ee9623"
-                                    radius="5em"
-                                    sidePadding="1em"
-                                    centerPadding=".4em"
-                                    shadow
-                                >
-                                    Get Started
-                                </Button>
+                                <button className='button' >Get Started</button>
                             </Link>
                         </div>
                     </div>
