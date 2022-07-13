@@ -9,7 +9,7 @@
     "main": "index.js",
     "scripts": {
         "heroku": "sh ./setup/setup.sh && node index.js",
-        "start": "node index.js",
+        "start": "sh ./setup/setup.sh && node index.js",
         "setup": "sh ./setup/setup.sh",
         "vscode": "sh ./setup/install-plugins.sh",
         "migrate:dev": "cross-env DBOP=migrate NODE_ENV=dev node app/database/migrate.js",
