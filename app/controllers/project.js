@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Project = require('../models/project');
 const {customValidator} = require("../helpers/validator");
 const {ClientError} = require("../helpers/error");
+const Comment = require("../models/comment");
 
 router.get('/', async (req, res, next) => {
     let results = null;
@@ -91,6 +92,22 @@ router.put('/:id', async (req, res, next) => {
     }
 });
 
-
+router.delete('/:id', async (req, res, next) => {
+    const id = req.params.id;
+    let result = null;
+    try {
+        console.warn(id);
+        result = await Project.destroy({
+            where: { id }
+        });
+        if (result === 0) {
+            next(new ClientError(400, `id '${id}' doesn't exist`));
+            return;
+        }
+        res.send({ response: 'The comment has been deleted' });
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = { router, version: 1 };
