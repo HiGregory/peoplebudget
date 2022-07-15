@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Project = require('../models/project');
 const {customValidator} = require("../helpers/validator");
+const {ClientError} = require("../helpers/error");
 
 router.get('/', async (req, res, next) => {
     let results = null;
@@ -58,6 +59,33 @@ router.post('/', async (req, res, next) => {
         res.header('Location', `api/v1/project/${project.projectId}`);
         res.statusCode = 201;
         res.send({ responsd: 'Project created' });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.put('/', async (req, res, next) => {
+    let result = null;
+    const validationError = customValidator(req.body, {
+        details: null,
+        projectId: { type: 'numeric' }
+    });
+    if (validationError) {
+        next(validationError);
+        return;
+    }
+    try {
+        const { details, projectId } = req.body;
+        result = await Project.update({ details }, { where: { projectId } });
+        if (result.length === 1 && result[0] === 0) {
+            next(
+                new ClientError(400, `id '${projectId}' doesn't exist or no changes were made.`)
+            );
+            return;
+        }
+        res.header('Location', `api/v1/project/${projectId}`);
+        res.statusCode = 200;
+        res.send({ respond: 'Project updated' });
     } catch (error) {
         next(error);
     }
