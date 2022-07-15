@@ -64,31 +64,33 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-router.put('/', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     let result = null;
+    const id = req.params.id;
     const validationError = customValidator(req.body, {
-        details: null,
-        projectId: { type: 'numeric' }
+        details: null
     });
     if (validationError) {
         next(validationError);
         return;
     }
     try {
-        const { details, projectId } = req.body;
-        result = await Project.update({ details }, { where: { projectId } });
+        const { details } = req.body;
+        result = await Project.update({ details }, { where: { projectId: id } });
         if (result.length === 1 && result[0] === 0) {
             next(
-                new ClientError(400, `id '${projectId}' doesn't exist or no changes were made.`)
+                new ClientError(400, `id '${id}' doesn't exist or no changes were made.`)
             );
             return;
         }
-        res.header('Location', `api/v1/project/${projectId}`);
+        res.header('Location', `api/v1/project/${id}`);
         res.statusCode = 200;
         res.send({ respond: 'Project updated' });
     } catch (error) {
         next(error);
     }
 });
+
+
 
 module.exports = { router, version: 1 };
