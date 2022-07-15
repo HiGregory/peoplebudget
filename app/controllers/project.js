@@ -1,8 +1,15 @@
 const router = require('express').Router();
-const project = require('../models/project');
+const Project = require('../models/project');
 
-router.get('/', (req, res) => {
-    res.send('/project worked!');
+router.get('/', async (req, res) => {
+    let results = null;
+    try {
+        results = await Project.findAll();
+        res.statusCode(200);
+        res.send({ respond: results });
+    } catch(error) {
+        next(error);
+    }
 });
 
 module.exports = { router, version: 1 };

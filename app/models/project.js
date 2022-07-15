@@ -1,7 +1,7 @@
 const { DB } = require('../database/database');
 const { DataTypes } = require('sequelize');
 
-const project = DB.define('project', {
+const project = DB.define('Project', {
     projectId: {
         type: DataTypes.INTEGER,
         allowNull: false
