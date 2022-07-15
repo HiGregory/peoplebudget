@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const Project = require('../models/project');
-const {customValidator} = require("../helpers/validator");
-const {ClientError} = require("../helpers/error");
-const Comment = require("../models/comment");
+const { customValidator } = require('../helpers/validator');
+const { ClientError } = require('../helpers/error');
 
 router.get('/', async (req, res, next) => {
     let results = null;
