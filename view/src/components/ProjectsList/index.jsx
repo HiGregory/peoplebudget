@@ -4,6 +4,23 @@ import { Context } from '../../store/store';
 import { hideScrollBar } from './index.module.css';
 
 export const ProjectsList = (props) => {
+    const [projects, setProjects] = useState([]);
+    useEffect(async () => {
+        console.log('fetching projects')
+        const data = await handleFetchProject()
+        setProjects(data)
+    }, []);
+    const handleFetchProject = async () => {
+
+        const data = {
+            "$limit" : 10,
+            "$$app_token" : "5jyy0hlqy8thjp8jsbjc6iay9"
+        }
+        const response = await fetch('https://data.miamigov.com/resource/27a5-g8c5.json', {
+            data: JSON.stringify(data)
+        })
+        return response.json();
+    }
     const selectProject = (id) => {
         props.setProjectId(id);
         props.setViewList((viewList) => !viewList);
@@ -18,30 +35,30 @@ export const ProjectsList = (props) => {
                     boxShadow: 'inset 0 5px 5px -5px #000000'
                 }}
             >
-                {props.getProjects().map((project) => {
+                {projects.slice(0, 10).map((project) => {
                     return (
                         <div
-                            key={project.id}
+                            key={project.object_number}
                             className="row border mt-2 mb-3 rounded shadow"
                             style={{ backgroundColor: 'rgba(255,255,255,1)' }}
-                            onClick={() => selectProject(project.id)}
+                            onClick={() => selectProject(project.object_number)}
                         >
                             <div className="col-12 text-center">
                                 {' '}
-                                <h2>{project.title}</h2>{' '}
+                                <h2>{project.organization_description}</h2>{' '}
                             </div>
 
                             <div
                                 className="col-12"
                                 style={{ fontSize: '1.75rem', fontStyle: 'italic' }}
                             >
-                                {project.description}
+                                ${project.total}
                             </div>
                             <div
                                 className="col-12"
                                 style={{ fontSize: '1.75rem', fontStyle: 'italic' }}
                             >
-                                Author: {project.author}
+                                Author: {project.department_function_description}
                             </div>
                         </div>
                     );
