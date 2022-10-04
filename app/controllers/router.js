@@ -15,5 +15,7 @@ const { router: Post, version: PostVersion } = require('./post');
 router.use(`/v${PostVersion}/post`, Post);
 const { router: Reply, version: ReplyVersion } = require('./reply');
 router.use(`/v${ReplyVersion}/reply`, Reply);
+const { router: Project, version: ProjectVersion } = require('./project');
+router.use(`/v${ProjectVersion}/project`, Project);
 
 module.exports = router;

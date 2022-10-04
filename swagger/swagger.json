@@ -9,18 +9,127 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:3000",
+  "host": "localhost:8000",
   "basePath": "/api",
   "tags": [
     {
       "name": "Users",
       "description": "API for users in the system"
+    },
+    {
+      "name": "Projects",
+      "description": "API for projects in the system"
     }
   ],
   "schemes": ["http"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
+    "/v1/project": {
+      "get": {
+        "tags": ["Projects"],
+        "description": "Get all projects.",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {"description": "Got all projects.",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Projects"],
+        "description": "Create new project",
+        "parameters": [{
+          "name": "Project",
+          "in": "body",
+          "description": "Informations of the project",
+          "schema": {
+            "$ref": "#/definitions/Project"
+          }
+        }],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "Created a project",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        }
+      }
+    },
+    "/v1/project/{id}": {
+      "get": {
+        "tags": ["Projects"],
+        "description": "Get a project by ID",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Project ID to query",
+          "type": "integer"
+        }],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Found project",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Projects"],
+        "description": "Delete project by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Project ID to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Project deleted",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Projects"],
+        "description": "Update project by id",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Project ID to update",
+          "type": "integer"
+        },
+          {
+            "name": "Details",
+            "in": "body",
+            "description": "Update details",
+            "type": "string"
+          }],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Project updated",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        }
+      }
+    },
     "/auth/v1/register": {
       "post": {
         "tags": ["Users"],
@@ -105,6 +214,33 @@
     }
   },
   "definitions": {
+    "Project": {
+      "required": ["projectId", "title", "author", "votes"],
+      "properties": {
+        "projectId": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "integer"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        }
+      }
+    },
     "User": {
       "required": ["email", "_id"],
       "properties": {

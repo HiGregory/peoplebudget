@@ -1,5 +1,5 @@
 import React from 'react';
-import { wrapper, gridItems, firstCol, secondCol, thirdCol, fourthCol, Copyright } from './index.module.css';
+import { wrapper, gridItems, firstCol, secondCol, thirdCol, fourthCol, Copyright, title } from './index.module.css';
 
 const footer = () => {
     return (
@@ -16,7 +16,7 @@ const footer = () => {
                     </div>
 
                     <div className={secondCol}>
-                        <h5 className="title">Links</h5>
+                        <h5 className={title}>Links</h5>
                         <ul>
                             <li className="list-unstyled">
                                 <a href="#">Link 1</a>
@@ -33,7 +33,7 @@ const footer = () => {
                         </ul>
                     </div>
                     <div className={thirdCol}>
-                        <h5 className="title">Connect</h5>
+                        <h5 className={title}>Connect</h5>
                         <ul>
                             <li className="list-unstyled">
                                 <a href="#">Facebook</a>
@@ -51,7 +51,7 @@ const footer = () => {
                     </div>
 
                     <div className={fourthCol}>
-                        <h5 className="title">Contact</h5>
+                        <h5 className={title}>Contact</h5>
                         <ul>
                             <li className="list-unstyled">
                                 <span>Address:</span>
